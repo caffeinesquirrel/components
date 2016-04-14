@@ -4,16 +4,19 @@
 	class Dropdown {
 		constructor (options) {
 			this.el = options.el;
-
-			this._itemSelectCallbacks = [];
 			this._initEvents();
+
+			for(var key in EventMixin) {
+  			this[key] = EventMixin[key];
+			}
 		}
-		
+
 		/**
 		 * Add classname dropdown_open to element
 		 */
 		open () {
 			this.el.classList.add('dropdown_open');
+		  this.trigger("open");
 		}
 
 		/**
@@ -21,6 +24,7 @@
 		 */
 		close () {
 			this.el.classList.remove('dropdown_open');
+			this.trigger("close");
 		}
 
 		/**
@@ -32,14 +36,6 @@
 			} else {
 				this.open();
 			}
-		}
-
-		/**
-		 * Set callback on user select event
-		 * @param  {Function} callback
-		 */
-		onSelect (callback) {
-			this._itemSelectCallbacks.push(callback);
 		}
 
 		isOpen () {
@@ -62,21 +58,9 @@
 		_onItemClick (event) {
 			var itemHtml = event.target.innerHTML;
 			this.el.querySelector('.js-title').innerHTML = itemHtml;
-
-			this._itemSelectCallbacks.forEach(callback => {
-				callback({
-					el: this.el,
-					item: this,
-					text: itemHtml
-				});
-			});
-
-			this.close();
+			this.trigger("select", event.target);
+			this.close() ;
 		}
-
-
-
-		//TODO: method addItem
 	}
 
 	//EXPORT
