@@ -2,8 +2,11 @@
 	'use strict';
 
 	class Dropdown {
-		constructor (options) {
+		constructor (options, data) {
 			this.el = options.el;
+			//TemplateEngine(DropdownTmpl.innerHTML
+			this._template = document.getElementById(options.template).innerHTML;
+			this.data = data;
 			this._initEvents();
 
 			for(var key in EventMixin) {
@@ -11,6 +14,9 @@
 			}
 		}
 
+		render () {
+			this.el.innerHTML =	TemplateEngine(this._template, this.data);
+		}
 		/**
 		 * Add classname dropdown_open to element
 		 */
@@ -71,6 +77,7 @@
 		}
 
 		_onClick (event) {
+			console.log(event.target);
 			if (event.target.classList.contains('dropdown__item')) {
 				event.preventDefault();
 				this._onItemClick(event);

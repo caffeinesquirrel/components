@@ -44,4 +44,6 @@ ul.dropdown li a {
     text-decoration: none; /* removes the link's default decoration (underline) */
     padding-left: 0.5em; /* adds padding to the left at all links */
     padding-bottom: 0.4em; /* adds padding to the bottom at all links */
+    display: inline-block;
+    width: 100%;
 }

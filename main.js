@@ -1,15 +1,25 @@
 (function () {
+
 	//Use our component
-
-
-	let els = document.querySelectorAll('.js-dropdown');
-	let instances = [];
-	[].forEach.call(els, el => {
-		let dpd = new Dropdown({
-		 el: el
-	 })
-		instances.push(dpd);
+	let dpd = new Dropdown({
+  	el: document.createElement('div'),
+		template: 'DropdownTmpl',
+  }, {
+		title:'menu',
+ 	 	items: ['first', 'second'],
 	});
+
+	document.body.appendChild(dpd.el);
+	dpd.render();
+
+
+/*	let tml = TemplateEngine(DropdownTmpl.innerHTML, {
+		title:'menu',
+		items: ['first', 'second']
+	});
+	//console.log(tml);
+	document.body.insertAdjacentHTML('beforeEnd' ,tml);
+*/
 
 	/*menu.on("open", function(value) {
   	console.log("open");
