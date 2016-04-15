@@ -1,19 +1,22 @@
 (function () {
 	//Use our component
 
-	let menu = new Dropdown({
-		el: document.querySelector('.js-dropdown')
+
+	let els = document.querySelectorAll('.js-dropdown');
+	let instances = [];
+	[].forEach.call(els, el => {
+		let dpd = new Dropdown({
+		 el: el
+	 })
+		instances.push(dpd);
 	});
 
-	menu.on("open", function(value) {
+	/*menu.on("open", function(value) {
   	console.log("open");
 	});
 
 	menu.on("select", function(value) {
 		console.log("select", value.innerHTML);
-	});
+	});*/
 
-
-
-	console.dir(menu);
 })();

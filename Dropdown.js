@@ -17,6 +17,7 @@
 		open () {
 			this.el.classList.add('dropdown_open');
 		  this.trigger("open");
+			document.body.addEventListener('click', this._openEvent);
 		}
 
 		/**
@@ -25,6 +26,7 @@
 		close () {
 			this.el.classList.remove('dropdown_open');
 			this.trigger("close");
+			document.body.removeEventListener('click', this._openEvent);
 		}
 
 		/**
@@ -38,11 +40,33 @@
 			}
 		}
 
+		_onBodyClick(event) {
+				let els = this._getAllDropDowns();
+				let clickInDrop = false;
+
+				[].forEach.call(els, el => {
+					if (el.contains(event.target)) {
+						clickInDrop = true;
+					}
+				});
+
+				if (!clickInDrop) {
+					[].forEach.call(els, el => {
+						el.classList.remove('dropdown_open');
+					});
+				}
+		}
+
+		_getAllDropDowns() {
+			return document.documentElement.querySelectorAll('.js-dropdown');
+		}
+
 		isOpen () {
 			return this.el.classList.contains('dropdown_open');
 		}
 
 		_initEvents () {
+			this._openEvent = this._onBodyClick.bind(this);
 			this.el.addEventListener('click', this._onClick.bind(this));
 		}
 
